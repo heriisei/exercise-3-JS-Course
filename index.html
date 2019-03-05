@@ -1,0 +1,79 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>People of Star Wars</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/solid.css" integrity="sha384-osqezT+30O6N/vsMqwW8Ch6wKlMofqueuia2H7fePy42uC05rm1G+BUPSd2iBSJL"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/fontawesome.css" integrity="sha384-BzCy2fixOYd0HObpx3GMefNqdbA7Qjcc91RgYeDjrHTIEXqiF00jKvgQG0+zY/7I"
+    crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+  <div class="col d-flex flex-column">
+    <h3 class="text-center">Heri R - Exercise 3</h3>
+    <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Search</label>
+          <input type="text" class="form-control" id="name-filter" onkeyup="nameFilter()" aria-describedby="nameHelp" placeholder="Name">
+        </div>
+    </form>
+    <table class="table">
+      <thead>
+        <tr class="thead-dark">
+          <th scope="col">Name</th>
+          <th scope="col">Gender</th>
+          <th scope="col">Birth Year</th>
+        </tr>
+      </thead>
+      <tbody id="data-swapi">
+        <!-- <tr>
+          <td scope="col">Yaya</td>
+          <td scope="col">Yaya</td>
+          <td scope="col">Yaya</td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+<script>
+  const url = "https://swapi.co/api/people/?page=1&format=json";
+  var results = [];
+  // axios.get(url).then(response => console.log(response.data.results));
+  function getRes() {
+    return axios.get(url).then(response => {
+      return response.data.results;
+    });
+  }
+  
+  getRes().then(data => {
+    results = data;
+    for(let i = 0; i < results.length; i++){
+      $('#data-swapi').append('<tr class="row-data"><td scope="col">'+results[i].name+'</td><td scope="col">'+results[i].gender+'</td><td scope="col">'+results[i].birth_year+'</td><tr>')
+      console.log(results[i])
+    }
+    console.log(results);
+  });
+
+  function nameFilter() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("name-filter");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("data-swapi");
+    li = ul.getElementsByTagName("tr");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("td")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+  }
+  
+</script>
+</body>
+</html>
